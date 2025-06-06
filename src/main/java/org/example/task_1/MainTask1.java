@@ -3,28 +3,40 @@ package org.example.task_1;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainTask1 {
     public static void main(String[] args) {
         String path = "D:/Games";
         StringBuilder log = new StringBuilder();
 
-        File src = createDir(path, "/src", log);
-        File res = createDir(path, "/res", log);
-        File saveGames = createDir(path, "/savegames", log);
-        File temp = createDir(path, "/temp", log);
+        List<String> directories = Arrays.asList(
+                "/src",
+                "/res",
+                "/savegames",
+                "/temp",
+                "/src/main",
+                "/src/test",
+                "/res/drawables",
+                "/res/vectors",
+                "/res/icons"
+        );
 
-        File main = createDir(src.getPath(), "/main", log);
-        File test = createDir(src.getPath(), "/test", log);
+        List<String> filesDirectories = Arrays.asList(
+                "/src/main/Main.java",
+                "/src/main/Utils.java"
+        );
 
-        createFile(main.getPath(), "/Main.java", log);
-        createFile(main.getPath(), "/Utils.java", log);
+        for (String dirPath : directories) {
+            createDir(path, dirPath, log);
+        }
 
-        File drawables = createDir(res.getPath(), "/drawables", log);
-        File vectors = createDir(res.getPath(), "/vectors", log);
-        File icons = createDir(res.getPath(), "/icons", log);
+        for (String dirPath : filesDirectories) {
+            createFile(path, dirPath, log);
+        }
 
-        File tempFile = createFile(temp.getPath(), "/temp.txt", log);
+        File tempFile = createFile(path + "/temp", "/temp.txt", log);
 
         try (FileWriter writer = new FileWriter(tempFile)) {
             writer.write(log.toString());
